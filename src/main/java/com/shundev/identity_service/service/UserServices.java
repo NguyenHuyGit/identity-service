@@ -36,7 +36,7 @@ public class UserServices {
 
         userUpdate.setPassword(request.getPassword());
         userUpdate.setFirstName(request.getFirstName());
-        userUpdate.setLastName((request.getLastName()));
+        userUpdate.setLastName(request.getLastName());
         userUpdate.setDob(request.getDob());
         return userRepository.save(userUpdate);
     }
