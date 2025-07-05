@@ -6,5 +6,5 @@ import com.shundev.identity_service.entity.User;
 
 @Repository
 public interface IUserRepository extends JpaRepository<User, String>{
-    boolean existsByUsername(String userName);
+    boolean existsByUsername(String userName); 
 }

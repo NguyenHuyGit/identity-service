@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.shundev.identity_service.dto.request.UserCreationRequest;
 import com.shundev.identity_service.dto.request.UserUpdateRequest;
 import com.shundev.identity_service.entity.User;
+import com.shundev.identity_service.exception.AppException;
+import com.shundev.identity_service.exception.ErrorCode;
 import com.shundev.identity_service.repository.IUserRepository;
 
 @Service
@@ -24,7 +26,7 @@ public class UserServices {
 
         User user = new User();
         if(userRepository.existsByUsername(request.getUsername())){
-            throw new RuntimeException("Username already exits");
+            throw new AppException(ErrorCode.USER_EXISTS);
         }
        
         user.setId(request.getId());

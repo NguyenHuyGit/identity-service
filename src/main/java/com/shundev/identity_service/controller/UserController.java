@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.shundev.identity_service.dto.request.ApiResponse;
 import com.shundev.identity_service.dto.request.UserCreationRequest;
 import com.shundev.identity_service.dto.request.UserUpdateRequest;
 import com.shundev.identity_service.entity.User;
@@ -24,10 +25,13 @@ public class UserController {
     private UserServices userServices;
     
     @PostMapping
-    User createUser(@RequestBody @Valid UserCreationRequest request) 
+    ApiResponse<User> createUser(@RequestBody @Valid UserCreationRequest request) 
     {
-        return userServices.createUser(request);
+        ApiResponse<User> apiResponse = new ApiResponse<>();
+        apiResponse.setResult(userServices.createUser(request));
+        return apiResponse;
     }
+        
 
     @PutMapping("/{userId}")
     User updateUser(@PathVariable String userId, @RequestBody UserUpdateRequest request)
@@ -51,6 +55,6 @@ public class UserController {
     String deleteUser(@PathVariable("userId") String userId)
     {
         userServices.deleteUser(userId);
-        return "user has been deleted";
+        return "user has been deleted"; 
     }
 }

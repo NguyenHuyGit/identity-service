@@ -6,9 +6,11 @@ import jakarta.validation.constraints.Size;
 
 public class UserCreationRequest {
     private String id;
+
+    @Size(min = 3, message = "USER_INVALID")
     private String username;
 
-    @Size(min = 8, message = "Password must be at least 8 characters long")
+    @Size(min = 8, message = "PASSWORD_INVALID")
     private String password;
     private String firstName;
     private String lastName;
@@ -55,7 +57,7 @@ public class UserCreationRequest {
     }
 
     public LocalDate getDob() {
-        return dob;
+        return dob; 
     }
 
     public void setDob(LocalDate dob) {
