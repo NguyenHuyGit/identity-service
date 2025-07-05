@@ -2,9 +2,13 @@ package com.shundev.identity_service.dto.request;
 
 import java.time.LocalDate;
 
+import jakarta.validation.constraints.Size;
+
 public class UserCreationRequest {
     private String id;
     private String username;
+
+    @Size(min = 8, message = "Password must be at least 8 characters long")
     private String password;
     private String firstName;
     private String lastName;

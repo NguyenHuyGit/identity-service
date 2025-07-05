@@ -15,6 +15,7 @@ import com.shundev.identity_service.dto.request.UserCreationRequest;
 import com.shundev.identity_service.dto.request.UserUpdateRequest;
 import com.shundev.identity_service.entity.User;
 import com.shundev.identity_service.service.UserServices;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/users")
@@ -23,7 +24,7 @@ public class UserController {
     private UserServices userServices;
     
     @PostMapping
-    User createUser(@RequestBody UserCreationRequest request) 
+    User createUser(@RequestBody @Valid UserCreationRequest request) 
     {
         return userServices.createUser(request);
     }
