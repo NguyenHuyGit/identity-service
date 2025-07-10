@@ -1,5 +1,7 @@
 package com.shundev.identity_service.exception;
 
+import java.text.ParseException;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -48,5 +50,11 @@ public class GloblalExceptionHandler {
         return ResponseEntity.badRequest().body(apiResponse);  
     }
 
-
+    @ExceptionHandler(value = ParseException.class)
+    ResponseEntity<ApiResponse> handldingParseException(ParseException exception){
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.setCode(1007);
+        apiResponse.setMessage("Parse Exception");
+        return ResponseEntity.badRequest().body(apiResponse);  
+    }
 } 

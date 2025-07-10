@@ -9,10 +9,9 @@ import lombok.AccessLevel;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+@AllArgsConstructor 
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AuthenticationResponse {
-    boolean authenticated;
-    String token;
+public class IntroSpectResponse {
+    boolean valid;
 }
