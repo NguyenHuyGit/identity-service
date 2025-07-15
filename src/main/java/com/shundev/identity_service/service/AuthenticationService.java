@@ -99,18 +99,18 @@ public class AuthenticationService {
         log.info("start introspect");
         var token = request.getToken();
 
-        JWSVerifier verifier = new MACVerifier(SINGER_KEY.getBytes()); // json web signature
+        JWSVerifier verifier = new MACVerifier(SINGER_KEY.getBytes());
 
         SignedJWT signedJWT = SignedJWT.parse(token);
 
         // check expiry time of token
-        Date expiryTime = signedJWT.getJWTClaimsSet().getExpirationTime(); // get through by claim set
+        Date expiryTime = signedJWT.getJWTClaimsSet().getExpirationTime();
 
         var isVerified = signedJWT.verify(verifier);
 
-        log.info("end introspect");
+        log.info("end introspect"); 
         return IntroSpectResponse.builder()
-                .valid(isVerified && expiryTime.after(new Date())) // valida check  two condition 
+                .valid(isVerified && expiryTime.after(new Date()))  
                 .build();
     }
 }
