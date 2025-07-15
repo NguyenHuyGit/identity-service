@@ -15,7 +15,7 @@ Identity Service là một dự án Spring Boot cung cấp các API xác thực 
 
 ## Công nghệ sử dụng
 
-- Java 17+
+- Java 21
 - Spring Boot 3
 - Spring Security
 - JWT (Nimbus JOSE + JWT)
