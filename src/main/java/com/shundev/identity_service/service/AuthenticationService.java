@@ -4,11 +4,13 @@ import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.StringJoiner;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
@@ -24,6 +26,7 @@ import com.shundev.identity_service.dto.request.AuthenticationRequest;
 import com.shundev.identity_service.dto.request.IntroSpectRequest;
 import com.shundev.identity_service.dto.response.AuthenticationResponse;
 import com.shundev.identity_service.dto.response.IntroSpectResponse;
+import com.shundev.identity_service.entity.User;
 import com.shundev.identity_service.exception.AppException;
 import com.shundev.identity_service.exception.ErrorCode;
 import com.shundev.identity_service.repository.IUserRepository;
@@ -58,7 +61,7 @@ public class AuthenticationService {
         }
 
         // generate a token
-        var token = generateToken(request.getUsername());
+        var token = generateToken(user);
         return AuthenticationResponse
                 .builder()
                 .token(token)
@@ -67,16 +70,17 @@ public class AuthenticationService {
     }
 
     // Generat token
-    private String generateToken(String username) {
+    private String generateToken(User user) {
         JWSHeader header = new JWSHeader(JWSAlgorithm.HS512);
 
         // payload
         JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
-                .subject(username)
+                .subject(user.getUsername())
                 .issuer("shundev.com")
                 .issueTime(new Date())
                 .expirationTime(new Date(
                         Instant.now().plus(1, ChronoUnit.HOURS).toEpochMilli()))
+                .claim("scope",buildScope(user))
                 .build();
 
         Payload payload = new Payload(jwtClaimsSet.toJSONObject());
@@ -92,6 +96,16 @@ public class AuthenticationService {
             throw new RuntimeException(ex);
         }
 
+    }
+
+    private String buildScope(User user){
+        StringJoiner scope = new StringJoiner(" ");
+
+        //check if user has roles
+        if(!CollectionUtils.isEmpty(user.getRoles())){
+            user.getRoles().forEach(scope::add); // method reference
+        }
+        return scope.toString();
     }
 
     public IntroSpectResponse introspect (IntroSpectRequest request)

@@ -8,6 +8,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import static org.springframework.security.config.Customizer.withDefaults;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
@@ -69,4 +71,9 @@ public class SecurityConfig {
         return new CorsFilter(urlBasedCorsConfigurationSource);
     }
 
+    // Password encoder bean
+    @Bean
+    PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder(10);
+    }
 }

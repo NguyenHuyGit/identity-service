@@ -1,6 +1,7 @@
 package com.shundev.identity_service.dto.response;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,8 +18,8 @@ import lombok.AccessLevel;
 public class UserResponse {
     String id;
     String username;
-    String password;
     String firstName;
     String lastName;
     LocalDate dob;
+    Set<String> roles;
 }

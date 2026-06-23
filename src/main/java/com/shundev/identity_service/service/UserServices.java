@@ -1,11 +1,13 @@
 package com.shundev.identity_service.service;
 
+import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.shundev.enums.Role;
 import com.shundev.identity_service.dto.request.UserCreationRequest;
 import com.shundev.identity_service.dto.request.UserUpdateRequest;
 import com.shundev.identity_service.dto.response.UserResponse;
@@ -26,6 +28,7 @@ public class UserServices {
 
     IUserRepository userRepository;
     UserMapper userMapper;
+    PasswordEncoder passwordEncoder;
 
     public UserResponse createUser(UserCreationRequest request) {
         if (userRepository.existsByUsername(request.getUsername())) {
@@ -33,9 +36,13 @@ public class UserServices {
         }
         
         User user = userMapper.toUser(request);
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10); // strong of password: 1
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-
+        
+        //set default role to USER
+        HashSet<String> roles = new HashSet<>();
+        roles.add(Role.USER.name());
+        user.setRoles(roles);
+        
         return userMapper.toUserResponse(userRepository.save(user));
     }
 
