@@ -20,18 +20,23 @@ import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
 @FieldDefaults (level = AccessLevel.PRIVATE, makeFinal = true)
+@Slf4j
 public class UserController {
     UserServices userServices;
     
     @PostMapping
     ApiResponse<UserResponse> createUser(@RequestBody @Valid UserCreationRequest request) 
     {
+        log.info("Controller: Create User");
         ApiResponse<UserResponse> apiResponse = new ApiResponse<>();
+
+        // set result for API response
         apiResponse.setResult(userServices.createUser(request));
         return apiResponse;
     }

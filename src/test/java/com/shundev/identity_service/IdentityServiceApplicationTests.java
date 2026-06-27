@@ -6,6 +6,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class IdentityServiceApplicationTests {
 
+
+	//  Define mock 
+	
+
+
 	@Test
 	void contextLoads() {
 	}

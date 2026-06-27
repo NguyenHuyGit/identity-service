@@ -20,10 +20,12 @@ import com.shundev.identity_service.repository.IUserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Slf4j
 public class UserServices {
 
     IUserRepository userRepository;
@@ -31,6 +33,8 @@ public class UserServices {
     PasswordEncoder passwordEncoder;
 
     public UserResponse createUser(UserCreationRequest request) {
+
+        log.info("Service: Create User");
         if (userRepository.existsByUsername(request.getUsername())) {
             throw new AppException(ErrorCode.USER_EXISTS);
         }
@@ -61,7 +65,7 @@ public class UserServices {
 
     public UserResponse getUser(String userId) {
         return userMapper.toUserResponse(userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found ")));
+                .orElseThrow(() -> new RuntimeException("User not found")));
     }
 
     public void deleteUser(String userId) {
