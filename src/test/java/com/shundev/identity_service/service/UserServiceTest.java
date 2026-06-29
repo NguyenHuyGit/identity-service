@@ -253,4 +253,11 @@ public class UserServiceTest {
 
         verify(userRepository,Mockito.times(1)).findById(userId);
     }
+
+    // @WithMockUser("usename")
+    void getMyInfo_valid_success(){
+        // when(userRepository.findByUsername(anyString())).thenReturn(Optional.of(user))
+        // var response = userService.getInfo();   
+        // Assertions.assertThat(response.getUsername()).isEqualTo("john");
+    }
 }

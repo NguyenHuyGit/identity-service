@@ -52,13 +52,16 @@ public class UserServices {
 
     public UserResponse updateUser(String userId, UserUpdateRequest request) {
         User userUpdate = userRepository.findById(userId)
-            .orElseThrow(() -> new RuntimeException("User not found"));
+            .orElseThrow(() -> new RuntimeException("User not found")); // todo: change to Error Code
 
         userMapper.updateUser(userUpdate, request);
 
         return userMapper.toUserResponse(userRepository.save(userUpdate));
     }
-
+    
+    // todo: implement get by user info 
+    
+    
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }

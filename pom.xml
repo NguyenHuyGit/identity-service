@@ -129,6 +129,37 @@
 					</compilerArgs>
 				</configuration>
 			</plugin>
+			<plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.8.11</version> <!-- Bạn có thể cập nhật version mới nhất nếu cần -->
+            <executions>
+                <!-- Cấu hình để khởi tạo JaCoCo trước khi chạy Unit Test -->
+                <execution>
+                    <id>prepare-agent</id>
+                    <goals>
+                        <goal>prepare-agent</goal>
+                    </goals>
+                </execution>
+                
+                <!-- Cấu hình để tự động tạo báo cáo sau khi Unit Test chạy xong -->
+                <execution>
+                    <id>report</id>
+                    <phase>prepare-package</phase> 
+                    <goals>
+                        <goal>report</goal>
+                    </goals>
+					<configuration>
+						<excludes>
+							<exclude>com/devteria/identityservice/dto/**</exclude>
+							<exclude>com/devteria/identityservice/entity/**</exclude>
+							<exclude>com/devteria/identityservice/mapper/**</exclude>
+							<exclude>com/devteria/identityservice/configuration/**</exclude>
+						</excludes>
+            		</configuration>
+                </execution>
+            </executions>
+        </plugin>
 		</plugins>
 	</build>
 
